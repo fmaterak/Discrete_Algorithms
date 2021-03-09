@@ -1,0 +1,2 @@
+Realnym procesem technologicznym, który można opisać zostać opisany za pomocą problemu przepływowego jest produkcja siedzeń samochodowych,
+maszynami w tym przypadku są urządzenia umożliwiające produkcję a także pracownicy, zadaniem wytworzenie gotowego siedzenia, a operacjami podstawowe działania przykładowo montaż sprężyn.
