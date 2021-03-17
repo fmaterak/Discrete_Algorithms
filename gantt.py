@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 
 def Gantt(imp, machineCount):
     fig, ax = plt.subplots()
-    color = ['red','blue','green','yellow','orange','pink']
+    color = ['red','blue','green','yellow','orange','pink','brown','magenta','purple','cyan']
     xlim = 0
     lbl_pool = []
     lbl = []
@@ -14,13 +14,14 @@ def Gantt(imp, machineCount):
         if xlim < (imp[x][1] + imp[x][2]): xlim = (imp[x][1] + imp[x][2])
         data = (imp[x][1],imp[x][2])
         #ochora przed powtarzaniem sie legendy
-        if color[imp[x][3]] in lbl_pool:
+        if color[imp[x][3]-1] in lbl_pool:
             prefix = '_'
         else:
-            lbl_pool.append(color[imp[x][3]])
+            lbl_pool.append(color[imp[x][3]-1])
             prefix = ''
         ax.broken_barh([(data)], (((machineCount+1-(imp[x][0])) * 10)-2, 4), facecolors=color[imp[x][3]-1], label=prefix+lbl[imp[x][3]-1])
 
+    print(lbl_pool)
     #obliczenia do wykresu
     ylim = machineCount * 10 + 10
     yticklabels = list(range(1, machineCount+1))
