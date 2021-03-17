@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-def Gantt(imp, lmaszyn, lzadan):
+def Gantt(imp, machineCount):
     fig, ax = plt.subplots()
     color = ['red','blue','green','yellow','orange','pink']
     xlim = 0
@@ -19,11 +19,11 @@ def Gantt(imp, lmaszyn, lzadan):
         else:
             lbl_pool.append(color[imp[x][3]])
             prefix = ''
-        ax.broken_barh([(data)], (((lmaszyn+1-(imp[x][0])) * 10)-2, 4), facecolors=color[imp[x][3]-1], label=prefix+lbl[imp[x][3]-1])
+        ax.broken_barh([(data)], (((machineCount+1-(imp[x][0])) * 10)-2, 4), facecolors=color[imp[x][3]-1], label=prefix+lbl[imp[x][3]-1])
 
     #obliczenia do wykresu
-    ylim = lmaszyn * 10 + 10
-    yticklabels = list(range(1, lmaszyn+1))
+    ylim = machineCount * 10 + 10
+    yticklabels = list(range(1, machineCount+1))
     yticks = [i * 10 for i in yticklabels]
     yticklabels.reverse()
 
@@ -53,7 +53,6 @@ imp = [[1,6,4,1],
        [3,9,3,2],
        [3,7,2,3]]
 
-lmaszyn = 3
-lzadan = 3
+machineCount = 3
 
-Gantt(imp, lmaszyn, lzadan)
+Gantt(imp, machineCount)
