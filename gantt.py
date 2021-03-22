@@ -11,8 +11,8 @@ def Gantt(imp, machineCount):
 
     #dodawanie do wykresu
     for x in range(len(imp)):
-        if xlim < (imp[x][1] + imp[x][2]): xlim = (imp[x][1] + imp[x][2])
-        data = (imp[x][1],imp[x][2])
+        if xlim < (imp[x][2]): xlim = (imp[x][2])
+        data = (imp[x][1],imp[x][2]-imp[x][1])
         #ochora przed powtarzaniem sie legendy
         if color[imp[x][3]-1] in lbl_pool:
             prefix = '_'
@@ -41,18 +41,18 @@ def Gantt(imp, machineCount):
     plt.show()
 
 #przykład
-# maszyna, rozpoczecie, trwanie, zadanie
-imp = [[1,6,4,1],
-       [1,3,3,2],
-       [1,1,2,3],
+# maszyna, rozpoczecie, zakończenie, zadanie
+imp = [[1,6,10,1],
+       [1,3,6,2],
+       [1,1,3,3],
 
-       [2,10,4,1],
-       [2,7,2,2],
-       [2,3,4,3],
+       [2,10,14,1],
+       [2,7,9,2],
+       [2,3,7,3],
 
-       [3,14,4,1],
-       [3,9,3,2],
-       [3,7,2,3]]
+       [3,14,18,1],
+       [3,9,12,2],
+       [3,7,9,3]]
 
 machineCount = 3
 
