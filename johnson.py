@@ -13,6 +13,17 @@ def read_from_file(filename):
                 my_p_ij[i][j] = int(p_i[j])
     return my_nbm, my_nbj, my_p_ij
 
+def read_file(filename):
+    with open(filename, "r") as fic:
+        line = fic.readline().split()
+        my_nbj = int(line[0])
+        my_nbm = int(line[1])
+        my_p_ij = numpy.zeros((my_nbj, my_nbm))
+        for i in range(my_nbj):
+            temp = fic.readline().split()
+            for j in range(my_nbm):
+                my_p_ij[i][j] = temp[j]
+    return my_nbm, my_nbj, my_p_ij.transpose()
 
 # calculate the c_ij table.
 def makespan(my_seq, processing_time, machines):
@@ -51,7 +62,7 @@ def johnson(data, nb_machines, nb_jobs):
 
 
 # run Johnson
-machines, jobs, processing_time = read_from_file("example.txt")
+machines, jobs, processing_time = read_file("data120.txt")
 seq, cmax = johnson(processing_time, machines, jobs)
 seq = [x+1 for x in seq]
 print("Machines:", machines)
