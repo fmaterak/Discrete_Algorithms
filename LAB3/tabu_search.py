@@ -19,21 +19,20 @@ def read_from_file(filename):
     return pij
 
 
-def count_cmax(sched, times):
+def count_cmax(schedule, times):
     tmp = [[None for _ in range(len(times[0]))] for _ in range(len(times))]
     for i in range(0, len(times)):
         for j in range(len(times[0])):
             if i == 0:
                 if j == 0:
-                    tmp[i][j] = times[sched[i] - 1][j]
+                    tmp[i][j] = times[schedule[i] - 1][j]
                 else:
-                    tmp[i][j] = (tmp[i][j - 1] + times[sched[i] - 1][j])
+                    tmp[i][j] = (tmp[i][j - 1] + times[schedule[i] - 1][j])
             else:
                 if j == 0:
-                    tmp[i][j] = tmp[i - 1][j] + times[sched[i] - 1][j]
+                    tmp[i][j] = tmp[i - 1][j] + times[schedule[i] - 1][j]
                 else:
-                    tmp[i][j] = max(tmp[i - 1][j], tmp[i][j - 1]) + times[sched[i] - 1][j]
-
+                    tmp[i][j] = max(tmp[i - 1][j], tmp[i][j - 1]) + times[schedule[i] - 1][j]
     return tmp[len(times) - 1][len(times[0]) - 1]
 
 
@@ -83,43 +82,43 @@ def initialize_shedule(times, method="random"):
         tmp = list(range(1, len(times) + 1))
         random.shuffle(tmp)
         return tmp
-    if method == "sequence":
+    if method == "order":
         return list(range(1, len(times) + 1))
 
 
-def make_search(times, tabu, max_tabu, current, best_cmax, best, method):
+def make_search(times, tabu, max_tabu, current, best_cmax, best_schedule, method):
     neighbourhoods = neighbourhoods_generator(current, function=method)
     tmp_tabu = tabu[-max_tabu:]
     current_cmax, current = best_neighbourhood(neighbourhoods, times, tmp_tabu[:])
     tabu.append(current)
     if current_cmax < best_cmax:
-        best = current
+        best_schedule = current
         best_cmax = current_cmax
 
-    return best, best_cmax, tabu, current
+    return best_schedule, best_cmax, tabu, current
 
 
 def tabu_search(times, max_tabu=20, iterations=500, init_function="random", neighbourhoods_function="swap"):
     schedule = initialize_shedule(times, method=init_function)
-    best = schedule
+    best_schedule = schedule
     best_cmax = count_cmax(schedule, times)
     tabu = [schedule]
     current = schedule[:]
     for i in range(0, iterations):
-        tmp = make_search(times, tabu[:], max_tabu, current, best_cmax, best, neighbourhoods_function)
-        best = tmp[0]
+        tmp = make_search(times, tabu[:], max_tabu, current, best_cmax, best_schedule, neighbourhoods_function)
+        best_schedule = tmp[0]
         best_cmax = tmp[1]
         tabu = tmp[2]
         current = tmp[3]
 
-    return best, best_cmax
+    return best_schedule, best_cmax
 
 def run():
     data = read_from_file("test.txt")
-    best, best_cmax = tabu_search(data)
-    return best, best_cmax
+    best_schedule, best_cmax = tabu_search(data)
+    return best_schedule, best_cmax
 
 if __name__ == "__main__":
-    best,best_cmax = run()
+    best_schedule, best_cmax = run()
     print(best_cmax)
-    print(best)
+    print(best_schedule)
