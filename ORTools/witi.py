@@ -90,9 +90,9 @@ def solve_witi_with_solver(file):
 
     pi_order = []
     for task_number in range(instance.tasks_number):
-        pi_order.append((task_number, solver.Value(model_start_vars[task_number])))
+        pi_order.append((task_number +1, solver.Value(model_start_vars[task_number])))
     pi_order.sort(key=lambda x: x[1])
-    pi_order = [x[0] for x in pi_order]
+    pi_order = [x[0] for x in pi_order] 
 
     print(f"Script ended\nSuma ważonych spóżnień: {solver.ObjectiveValue()}\norder: {pi_order}\nis optimal? {status_readable}")
     return solver.ObjectiveValue(), pi_order, status_readable
